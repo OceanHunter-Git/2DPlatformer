@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
         isGround = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, whatIsGround);
         if (isGround)
         {
-            jumpNumberCount = jumpNumber;
+            jumpNumberCount = jumpNumber - 1;
             playerAnim.SetBool("moreJump", false);
         }
 
@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
             if (isGround)
             {
                 Jump();
-                jumpNumberCount--;
             }
             else
             {
