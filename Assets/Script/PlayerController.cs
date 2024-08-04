@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     public Rigidbody2D theRb;
 
     public float moveSpeed;
@@ -21,6 +28,10 @@ public class PlayerController : MonoBehaviour
 
     public Animator playerAnim;
 
+    public float knockBackTime;
+    private float knockBackTimeCounter;
+    public float knockBackSpeed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,54 +41,68 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        activeSpeed = moveSpeed;
-        if (Input.GetKey(KeyCode.LeftShift))
-        { 
-            activeSpeed = runSpeed;
-        }
-        theRb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * activeSpeed, theRb.velocity.y);
-
-        isGround = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, whatIsGround);
-        if (isGround)
+        if (knockBackTimeCounter <= 0)
         {
-            jumpNumberCount = jumpNumber - 1;
-            playerAnim.SetBool("moreJump", false);
-        }
+            activeSpeed = moveSpeed;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                activeSpeed = runSpeed;
+            }
+            theRb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * activeSpeed, theRb.velocity.y);
 
-        if (Input.GetKeyDown(KeyCode.W))
-        {
+            isGround = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, whatIsGround);
+            
             if (isGround)
             {
-                Jump();
+                jumpNumberCount = jumpNumber - 1;
+            }
+            
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                if (isGround)
+                {
+                    Jump();
+                }
+                else
+                {
+                    if (jumpNumberCount > 0)
+                    {
+                        Jump();
+                        jumpNumberCount--;
+                        playerAnim.SetTrigger("isMoreJump");
+                    }
+                }
+            }
+
+            if (theRb.velocity.x >= 0)
+            {
+                transform.localScale = new Vector3(1f, 1f, 1f);
             }
             else
             {
-                if (jumpNumberCount > 0)
-                {
-                    Jump();
-                    jumpNumberCount--;
-                    playerAnim.SetBool("moreJump", true);
-                }    
+                transform.localScale = new Vector3(-1f, 1f, 1f);
             }
-        }
-
-        if (theRb.velocity.x >= 0)
-        {
-            transform.localScale = new Vector3(1f, 1f, 1f);
+            playerAnim.SetFloat("xSpeed", Mathf.Abs(theRb.velocity.x));
+            playerAnim.SetFloat("ySpeed", theRb.velocity.y);
+            playerAnim.SetBool("isGround", isGround);
         }
         else
         {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
+            knockBackTimeCounter -= Time.deltaTime;
+
+            theRb.velocity = new Vector2(-knockBackSpeed * transform.localScale.x, theRb.velocity.y);
         }
-        playerAnim.SetFloat("xSpeed", Mathf.Abs(theRb.velocity.x));
-        playerAnim.SetFloat("ySpeed", theRb.velocity.y);
-        playerAnim.SetBool("isGround", isGround);
-        
     }
 
     void Jump()
     {
         theRb.velocity = new Vector2(theRb.velocity.x, jumpForce);
+    }
+
+    public void KnockBack()
+    {
+        theRb.velocity = new Vector2(0f, jumpForce * 0.5f);
+        knockBackTimeCounter = knockBackTime;
+        playerAnim.SetTrigger("isKnockBack");
     }
 }
