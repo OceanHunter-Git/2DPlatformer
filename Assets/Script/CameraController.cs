@@ -51,7 +51,10 @@ public class CameraController : MonoBehaviour
         {
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, minPos.position.x + halfWidth, maxPos.position.x - halfWidth), Mathf.Clamp(transform.position.y, minPos.position.y + halfHeight, maxPos.position.y - halfHeight), transform.position.z);
         }
-
+        if (ParallaxBackGround.instance != null)
+        {
+            ParallaxBackGround.instance.MoveBackGround();
+        }
     }
 
     private void OnDrawGizmos()

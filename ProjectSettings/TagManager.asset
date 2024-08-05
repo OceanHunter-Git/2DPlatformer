@@ -47,3 +47,9 @@ TagManager:
   - name: Player
     uniqueID: 276875725
     locked: 0
+  - name: PickUp
+    uniqueID: 2256757507
+    locked: 0
+  - name: Effect
+    uniqueID: 2770280001
+    locked: 0

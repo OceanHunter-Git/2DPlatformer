@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (knockBackTimeCounter <= 0)
         {
             activeSpeed = moveSpeed;
@@ -101,7 +102,7 @@ public class PlayerController : MonoBehaviour
 
     public void KnockBack()
     {
-        theRb.velocity = new Vector2(0f, jumpForce * 0.5f);
+        theRb.velocity = new Vector2(0f, jumpForce * 0.4f);
         knockBackTimeCounter = knockBackTime;
         playerAnim.SetTrigger("isKnockBack");
     }
