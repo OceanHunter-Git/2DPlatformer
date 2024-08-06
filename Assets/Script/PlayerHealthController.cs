@@ -56,7 +56,7 @@ public class PlayerHealthController : MonoBehaviour
             currentHealth -= damageToTake;
             if (currentHealth <= 0)
             {
-                gameObject.SetActive(false);
+                LifeController.instance.Respawn();
             }
             else
             {
