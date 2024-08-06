@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
@@ -14,6 +16,11 @@ public class UIController : MonoBehaviour
     public Image[] heartIcon;
 
     public Sprite heartFull, heartEmpty;
+
+    public TMP_Text liveText;
+
+    public GameObject gameoverPanel;
+    public float transformSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,5 +50,31 @@ public class UIController : MonoBehaviour
                 heartIcon[i].enabled = false;
             }
         }
+    }
+
+    public void liveDisplay(int currentLive)
+    {
+        liveText.text = "X" + currentLive.ToString();
+    }
+
+    public void ShowGameOver()
+    {
+        StartCoroutine(ShowGameOverCo()); 
+    }
+
+    public IEnumerator ShowGameOverCo()
+    {
+        gameoverPanel.transform.localScale = Vector3.zero;
+        gameoverPanel.SetActive(true);
+        while (gameoverPanel.transform.localScale != Vector3.one)
+        {
+            gameoverPanel.transform.localScale = Vector3.MoveTowards(gameoverPanel.transform.localScale, Vector3.one, transformSpeed * Time.deltaTime);
+            yield return null;
+        }   
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
