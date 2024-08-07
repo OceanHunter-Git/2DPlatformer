@@ -19,6 +19,8 @@ public class UIController : MonoBehaviour
 
     public TMP_Text liveText;
 
+    public TMP_Text fruitText;
+
     public GameObject gameoverPanel;
     public float transformSpeed;
     // Start is called before the first frame update
@@ -52,9 +54,14 @@ public class UIController : MonoBehaviour
         }
     }
 
-    public void liveDisplay(int currentLive)
+    public void LiveDisplay(int currentLive)
     {
         liveText.text = "X" + currentLive.ToString();
+    }
+
+    public void FruitDisplay(int currentFruit)
+    {
+        fruitText.text = currentFruit.ToString();
     }
 
     public void ShowGameOver()

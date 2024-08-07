@@ -17,11 +17,13 @@ public class LifeController : MonoBehaviour
     public float gameoverDelay;
 
     private PlayerController thePlayer;
+
+    public GameObject deathEffect, respawnEffect;
     // Start is called before the first frame update
     void Start()
     {
         thePlayer = FindFirstObjectByType<PlayerController>();
-        UIController.instance.liveDisplay(currentLive);
+        UIController.instance.LiveDisplay(currentLive);
     }
 
     // Update is called once per frame
@@ -33,6 +35,7 @@ public class LifeController : MonoBehaviour
     public void Respawn()
     {
         thePlayer.gameObject.SetActive(false);
+        Instantiate(deathEffect, thePlayer.transform.position, Quaternion.identity);
         thePlayer.theRb.velocity = Vector2.zero;
 
         currentLive--;
@@ -46,8 +49,15 @@ public class LifeController : MonoBehaviour
             currentLive = 0;
             Gameover();
         }
-        UIController.instance.liveDisplay(currentLive);
+        UIController.instance.LiveDisplay(currentLive);
+        
 
+    }
+
+    public void AddLife()
+    {
+        currentLive++;
+        UIController.instance.LiveDisplay(currentLive);
     }
 
     public IEnumerator RespawnCo()
@@ -58,6 +68,7 @@ public class LifeController : MonoBehaviour
             yield return null;
         }
         PlayerHealthController.instance.addHealth(PlayerHealthController.instance.maxHealth);
+        Instantiate(respawnEffect, thePlayer.transform.position, Quaternion.identity);
         thePlayer.gameObject.SetActive(true);
     }
 
