@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Jump()
+    public void Jump()
     {
         theRb.velocity = new Vector2(theRb.velocity.x, jumpForce);
     }
