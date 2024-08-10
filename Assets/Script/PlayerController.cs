@@ -41,57 +41,59 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (knockBackTimeCounter <= 0)
+        if (Time.timeScale > 0)
         {
-            activeSpeed = moveSpeed;
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (knockBackTimeCounter <= 0)
             {
-                activeSpeed = runSpeed;
-            }
-            theRb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * activeSpeed, theRb.velocity.y);
+                activeSpeed = moveSpeed;
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    activeSpeed = runSpeed;
+                }
+                theRb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * activeSpeed, theRb.velocity.y);
 
-            isGround = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, whatIsGround);
-            
-            if (isGround)
-            {
-                jumpNumberCount = jumpNumber - 1;
-            }
-            
-            if (Input.GetKeyDown(KeyCode.W))
-            {
+                isGround = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, whatIsGround);
+
                 if (isGround)
                 {
-                    Jump();
+                    jumpNumberCount = jumpNumber - 1;
+                }
+
+                if (Input.GetKeyDown(KeyCode.W))
+                {
+                    if (isGround)
+                    {
+                        Jump();
+                    }
+                    else
+                    {
+                        if (jumpNumberCount > 0)
+                        {
+                            Jump();
+                            jumpNumberCount--;
+                            playerAnim.SetTrigger("isMoreJump");
+                        }
+                    }
+                }
+
+                if (theRb.velocity.x >= 0)
+                {
+                    transform.localScale = new Vector3(1f, 1f, 1f);
                 }
                 else
                 {
-                    if (jumpNumberCount > 0)
-                    {
-                        Jump();
-                        jumpNumberCount--;
-                        playerAnim.SetTrigger("isMoreJump");
-                    }
+                    transform.localScale = new Vector3(-1f, 1f, 1f);
                 }
-            }
-
-            if (theRb.velocity.x >= 0)
-            {
-                transform.localScale = new Vector3(1f, 1f, 1f);
+                playerAnim.SetFloat("xSpeed", Mathf.Abs(theRb.velocity.x));
+                playerAnim.SetFloat("ySpeed", theRb.velocity.y);
+                playerAnim.SetBool("isGround", isGround);
             }
             else
             {
-                transform.localScale = new Vector3(-1f, 1f, 1f);
-            }
-            playerAnim.SetFloat("xSpeed", Mathf.Abs(theRb.velocity.x));
-            playerAnim.SetFloat("ySpeed", theRb.velocity.y);
-            playerAnim.SetBool("isGround", isGround);
-        }
-        else
-        {
-            knockBackTimeCounter -= Time.deltaTime;
+                knockBackTimeCounter -= Time.deltaTime;
 
-            theRb.velocity = new Vector2(-knockBackSpeed * transform.localScale.x, theRb.velocity.y);
+                theRb.velocity = new Vector2(-knockBackSpeed * transform.localScale.x, theRb.velocity.y);
+            }
         }
     }
 

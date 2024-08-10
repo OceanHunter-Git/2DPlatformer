@@ -22,7 +22,11 @@ public class UIController : MonoBehaviour
     public TMP_Text fruitText;
 
     public GameObject gameoverPanel;
+    public GameObject pausePanel;
+
     public float transformSpeed;
+
+    public string menuName;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +36,10 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseAndUnPause();
+        }    
     }
 
     public void UpdateHealthDisplay(int health, int maxHealth)
@@ -83,5 +90,27 @@ public class UIController : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1f;
+    }
+
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene(menuName);
+        Time.timeScale = 1f;
+    }
+
+    public void PauseAndUnPause()
+    {
+        if (Time.timeScale == 1)
+        {
+            pausePanel.SetActive(true);
+            Time.timeScale = 0;
+
+        }
+        else
+        {
+            pausePanel.SetActive(false);
+            Time.timeScale = 1;
+        }
     }
 }
