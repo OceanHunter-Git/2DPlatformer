@@ -27,10 +27,14 @@ public class UIController : MonoBehaviour
     public float transformSpeed;
 
     public string menuName;
+
+    public Image endPanel;
+    public float fadeSpeed;
+    private bool fadeFromBlack, fadeToBlack;
     // Start is called before the first frame update
     void Start()
     {
-        
+        FadeFromBlack();    
     }
 
     // Update is called once per frame
@@ -39,7 +43,15 @@ public class UIController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PauseAndUnPause();
-        }    
+        }  
+        if (fadeFromBlack)
+        {
+            endPanel.color = new Color(endPanel.color.r,endPanel.color.g,endPanel.color.b,Mathf.MoveTowards(endPanel.color.a, 0, fadeSpeed * Time.deltaTime));
+        }
+        if (fadeToBlack)
+        {
+            endPanel.color = new Color(endPanel.color.r, endPanel.color.g, endPanel.color.b, Mathf.MoveTowards(endPanel.color.a, 1, fadeSpeed * Time.deltaTime));
+        }
     }
 
     public void UpdateHealthDisplay(int health, int maxHealth)
@@ -112,5 +124,17 @@ public class UIController : MonoBehaviour
             pausePanel.SetActive(false);
             Time.timeScale = 1;
         }
+    }
+
+    public void FadeFromBlack()
+    {
+        fadeFromBlack = true;
+        fadeToBlack = false;
+    }
+
+    public void FadeToBlack()
+    {
+        fadeFromBlack = false;
+        fadeToBlack = true;
     }
 }

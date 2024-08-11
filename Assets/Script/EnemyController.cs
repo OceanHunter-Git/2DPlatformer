@@ -16,6 +16,8 @@ public class EnemyController : MonoBehaviour
     public Animator theAnim;
 
     public bool isDefeated;
+
+    public bool isFriend;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +40,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player")  && isFriend == false)
         {
             PlayerHealthController.instance.takeDamage(1);
         }    
@@ -46,7 +48,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && isFriend == false)
         {
             destroyWaitTimeCounter = destroyWaitTime;
             isDefeated = true;
