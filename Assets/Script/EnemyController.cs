@@ -31,6 +31,7 @@ public class EnemyController : MonoBehaviour
             if (destroyWaitTimeCounter < 0)
             {
                 Destroy(gameObject);
+                AudioManager.instance.PlaySFX(5);
             }
         }    
     }
@@ -50,6 +51,7 @@ public class EnemyController : MonoBehaviour
             destroyWaitTimeCounter = destroyWaitTime;
             isDefeated = true;
             theAnim.SetTrigger("isDefeated");
+            AudioManager.instance.PlaySFX(6);
             PlayerController.instance.Jump();
         }    
     }

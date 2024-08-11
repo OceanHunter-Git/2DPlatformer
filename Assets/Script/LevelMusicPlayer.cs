@@ -8,7 +8,10 @@ public class LevelMusicPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AudioManager.instance.PlayLevelMusic(trackToPlay);    
+        if (AudioManager.instance != null)
+        {
+            AudioManager.instance.PlayLevelMusic(trackToPlay);
+        }
     }
 
 

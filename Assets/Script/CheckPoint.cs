@@ -28,6 +28,7 @@ public class CheckPoint : MonoBehaviour
             theCPM.SetActiveCP(this);
             theAnim.SetBool("isActive", true);
             isActive = true;
+            AudioManager.instance.PlaySFX(3);
         }
     }
 

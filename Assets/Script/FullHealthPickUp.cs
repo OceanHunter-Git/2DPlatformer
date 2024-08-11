@@ -15,6 +15,7 @@ public class FullHealthPickUp : MonoBehaviour
                 PlayerHealthController.instance.addHealth(PlayerHealthController.instance.maxHealth);
                 Instantiate(healthPS, transform.position, transform.rotation);
                 Destroy(gameObject);
+                AudioManager.instance.PlaySFX(10);
             }
         }
     }

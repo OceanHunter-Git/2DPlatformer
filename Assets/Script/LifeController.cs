@@ -50,7 +50,8 @@ public class LifeController : MonoBehaviour
             Gameover();
         }
         UIController.instance.LiveDisplay(currentLive);
-        
+        AudioManager.instance.PlaySFX(11);
+
 
     }
 
@@ -58,6 +59,7 @@ public class LifeController : MonoBehaviour
     {
         currentLive++;
         UIController.instance.LiveDisplay(currentLive);
+        AudioManager.instance.PlaySFX(8);
     }
 
     public IEnumerator RespawnCo()

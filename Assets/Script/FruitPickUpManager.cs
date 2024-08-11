@@ -22,6 +22,7 @@ public class FruitPickUpManager : MonoBehaviour
     public void AddFruitAmount(int amountToAdd)
     {
         currentFruitAmount += amountToAdd;
+        AudioManager.instance.PlaySFXPitch(9);
 
         if (currentFruitAmount > extraLifeCost)
         {

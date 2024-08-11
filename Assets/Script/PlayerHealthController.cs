@@ -57,12 +57,14 @@ public class PlayerHealthController : MonoBehaviour
             if (currentHealth <= 0)
             {
                 LifeController.instance.Respawn();
+                AudioManager.instance.PlaySFX(11);
             }
             else
             {
                 invincibleTimeCounter = invincibleTime;
                 theSR.color = fadeColor;
                 PlayerController.instance.KnockBack();
+                AudioManager.instance.PlaySFX(13);
 
             }
             UIController.instance.UpdateHealthDisplay(currentHealth, maxHealth);

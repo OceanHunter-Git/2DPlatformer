@@ -11,7 +11,8 @@ public class AudioManager : MonoBehaviour
         Debug.Log("awake");
         if (instance == null)
         {
-            SetInstanceAM();
+            instance = this;
+            DontDestroyOnLoad(gameObject);
             Debug.Log("awakeyes");
         }
         else
@@ -21,15 +22,13 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void SetInstanceAM()
-    {
-        instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
+
 
     public AudioSource mainMenuMusic, levelVictoryMusic, bossBattleMusic;
 
     public AudioSource[] levelTracks;
+
+    public AudioSource[] allSFX;
 
     public void StopPlayMusic()
     {
@@ -64,5 +63,18 @@ public class AudioManager : MonoBehaviour
     {
         StopPlayMusic();
         levelTracks[trackToPlay].Play();
+    }
+
+    public void PlaySFX(int sfxToPlay)
+    {
+        allSFX[sfxToPlay].Stop();
+        allSFX[sfxToPlay].Play();
+    }
+
+    public void PlaySFXPitch(int sfxToPlay)
+    {
+        allSFX[sfxToPlay].Stop();
+        allSFX[sfxToPlay].pitch = Random.Range(0.75f, 1.25f);
+        allSFX[sfxToPlay].Play();
     }
 }
