@@ -17,6 +17,7 @@ public class FruitPickUpManager : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
+        currentFruitAmount = InfoTracker.instance.currentFruit;
         UIController.instance.FruitDisplay(currentFruitAmount);
     }
     public void AddFruitAmount(int amountToAdd)

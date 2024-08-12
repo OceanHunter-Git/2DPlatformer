@@ -15,7 +15,7 @@ public class LevelEnd : MonoBehaviour
 
     public float fadeTime;
 
-    public string nextSceneName;
+    public string nextLevelName;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -36,7 +36,10 @@ public class LevelEnd : MonoBehaviour
     {
         yield return new WaitForSeconds(nextDelay - fadeTime);
         UIController.instance.FadeToBlack();
+        InfoTracker.instance.GetInfo();
+        InfoTracker.instance.SaveInfo();
+        PlayerPrefs.SetString("currentLevel", nextLevelName);
         yield return new WaitForSeconds(fadeTime);
-        SceneManager.LoadScene(nextSceneName);
+        SceneManager.LoadScene(nextLevelName);
     }
 }

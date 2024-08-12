@@ -23,6 +23,7 @@ public class LifeController : MonoBehaviour
     void Start()
     {
         thePlayer = FindFirstObjectByType<PlayerController>();
+        currentLive = InfoTracker.instance.currentLives;
         UIController.instance.LiveDisplay(currentLive);
     }
 

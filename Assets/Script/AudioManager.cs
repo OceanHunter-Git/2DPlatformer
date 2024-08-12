@@ -8,17 +8,17 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("awake");
+
         if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log("awakeyes");
+
         }
         else
         {
             Destroy(gameObject);
-            Debug.Log("awakeno");
+
         }
     }
 

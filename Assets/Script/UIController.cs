@@ -28,6 +28,7 @@ public class UIController : MonoBehaviour
 
     public string menuName;
 
+
     public Image endPanel;
     public float fadeSpeed;
     private bool fadeFromBlack, fadeToBlack;
