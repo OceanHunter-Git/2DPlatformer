@@ -12,6 +12,7 @@ public class BossBattleActivator : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             theBoss.ActivateBattle();
+            gameObject.SetActive(false);
         }
     }
 }

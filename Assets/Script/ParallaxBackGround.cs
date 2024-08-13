@@ -10,7 +10,7 @@ public class ParallaxBackGround : MonoBehaviour
     {
         instance = this;
     }
-    private Transform theCam;
+    private CameraController theCam;
 
     public Transform sky, treeline;
 
@@ -19,14 +19,23 @@ public class ParallaxBackGround : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        theCam = Camera.main.transform;
+        theCam = FindFirstObjectByType<CameraController>();
     }
 
     // Update is called once per frame
-    public void MoveBackGround()
+    public void MoveBG()
     {
-        sky.position = new Vector3(theCam.position.x, theCam.position.y, sky.position.z);
+        sky.position = new Vector3(theCam.transform.position.x, theCam.transform.position.y, sky.position.z);
 
-        treeline.position = new Vector3(theCam.position.x * parallaxSpeed, theCam.position.y, treeline.position.z);
+        treeline.position = new Vector3(theCam.transform.position.x * parallaxSpeed, theCam.transform.position.y, treeline.position.z);
+    }
+    public void LateUpdate()
+    {
+        if (theCam.enabled == false)
+        {
+            sky.position = new Vector3(theCam.transform.position.x, theCam.transform.position.y, sky.position.z);
+
+            treeline.position = new Vector3(theCam.transform.position.x * parallaxSpeed, theCam.transform.position.y, treeline.position.z);
+        }
     }
 }
