@@ -7325,7 +7325,7 @@ MonoBehaviour:
   moveSpeed: 5
   launcherRotationSpeed: 90
   waitToShot: 3
-  timeBetweenShot: 1
+  timeBetweenShot: 0.1
   projectileToFire: {fileID: 6707276713317281199, guid: a360cd5f64f71d14db071a91bd60a305, type: 3}
   firePoints:
   - {fileID: 434278937}
@@ -8083,7 +8083,7 @@ MonoBehaviour:
   isEnd: 0
   nextDelay: 3.5
   fadeTime: 1
-  nextLevelName: MainMenu
+  nextLevelName: Victory
 --- !u!1 &52625012588276966
 GameObject:
   m_ObjectHideFlags: 0

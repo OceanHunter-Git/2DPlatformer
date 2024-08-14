@@ -38,7 +38,10 @@ public class LevelEnd : MonoBehaviour
         UIController.instance.FadeToBlack();
         InfoTracker.instance.GetInfo();
         InfoTracker.instance.SaveInfo();
-        PlayerPrefs.SetString("currentLevel", nextLevelName);
+        if (nextLevelName != "Victory")
+        {
+            PlayerPrefs.SetString("currentLevel", nextLevelName);
+        }
         yield return new WaitForSeconds(fadeTime);
         SceneManager.LoadScene(nextLevelName);
     }
