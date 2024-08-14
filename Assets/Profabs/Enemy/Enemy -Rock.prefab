@@ -291,7 +291,7 @@ MonoBehaviour:
   currentPoint: 0
   moveSpeed: 2
   pointWaitTime: 2
-  pointWaitTimeCounter: 0
+  theEC: {fileID: 8662212576846565844}
   theAnim: {fileID: 5729730959297329209}
 --- !u!114 &8662212576846565844
 MonoBehaviour:
@@ -306,9 +306,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyWaitTime: 0.5
-  destroyWaitTimeCounter: 0
   theAnim: {fileID: 5729730959297329209}
   isDefeated: 0
+  isFriend: 0
+  shouldChasePlayer: 0
+  distanceToChasePlayer: 0
 --- !u!61 &3630871444050147182
 BoxCollider2D:
   m_ObjectHideFlags: 0

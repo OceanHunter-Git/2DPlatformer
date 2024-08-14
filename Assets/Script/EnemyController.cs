@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -12,12 +13,17 @@ public class EnemyController : MonoBehaviour
     }
 
     public float destroyWaitTime;
-    public float destroyWaitTimeCounter;
+    private float destroyWaitTimeCounter;
     public Animator theAnim;
 
     public bool isDefeated;
 
     public bool isFriend;
+
+    public bool shouldChasePlayer;
+
+    public bool isChasing;
+    public float distanceToChasePlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +41,28 @@ public class EnemyController : MonoBehaviour
                 Destroy(gameObject);
                 AudioManager.instance.PlaySFX(5);
             }
-        }    
+        }
+        else
+        {
+            if (shouldChasePlayer == true)
+            {
+                if (isChasing == false)
+                {
+                    if (Vector3.Distance(transform.position, PlayerController.instance.transform.position) < distanceToChasePlayer) 
+                    {
+                        isChasing = true;
+                    }
+                }
+                else
+                {
+                    if (Vector3.Distance(transform.position, PlayerController.instance.transform.position) > distanceToChasePlayer)
+                    {
+                        isChasing = false;
+                    }
+                }
+            }
+        }
+        
     }
 
     private void OnCollisionEnter2D(Collision2D other)

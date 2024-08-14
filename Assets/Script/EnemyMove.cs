@@ -12,7 +12,9 @@ public class EnemyMove : MonoBehaviour
 
     public float pointWaitTime;
 
-    public float pointWaitTimeCounter;
+    private float pointWaitTimeCounter;
+
+    public EnemyController theEC;
 
     public Animator theAnim;
     // Start is called before the first frame update
@@ -29,32 +31,48 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (EnemyController.instance.isDefeated == false)
+        if (theEC.isDefeated == false)
         {
-            transform.position = Vector3.MoveTowards(transform.position, patrolPoints[currentPoint].position, moveSpeed * Time.deltaTime);
-
-            if (transform.position == patrolPoints[currentPoint].position)
+            if (theEC.shouldChasePlayer == false || (theEC.shouldChasePlayer == true && theEC.isChasing == false))
             {
-                theAnim.SetBool("isMoving", false);
-                pointWaitTimeCounter -= Time.deltaTime;
-                if (pointWaitTimeCounter < 0)
-                {
-                    currentPoint++;
-                    pointWaitTimeCounter = pointWaitTime;
-                    theAnim.SetBool("isMoving", true);
-                    if (currentPoint >= patrolPoints.Length)
-                    {
-                        currentPoint = 0;
-                    }
+                transform.position = Vector3.MoveTowards(transform.position, patrolPoints[currentPoint].position, moveSpeed * Time.deltaTime);
 
-                    if (transform.position.x < patrolPoints[currentPoint].position.x)
+                if (transform.position == patrolPoints[currentPoint].position)
+                {
+                    theAnim.SetBool("isMoving", false);
+                    pointWaitTimeCounter -= Time.deltaTime;
+                    if (pointWaitTimeCounter < 0)
                     {
-                        transform.localScale = new Vector3(-1f, 1f, 1f);
+                        currentPoint++;
+                        pointWaitTimeCounter = pointWaitTime;
+                        theAnim.SetBool("isMoving", true);
+                        if (currentPoint >= patrolPoints.Length)
+                        {
+                            currentPoint = 0;
+                        }
+
+                        
                     }
-                    else
-                    {
-                        transform.localScale = new Vector3(1f, 1f, 1f);
-                    }
+                }
+                if (transform.position.x < patrolPoints[currentPoint].position.x)
+                {
+                    transform.localScale = new Vector3(-1f, 1f, 1f);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(1f, 1f, 1f);
+                }
+            }
+            else if (theEC.isChasing == true)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, PlayerController.instance.transform.position, moveSpeed * Time.deltaTime);
+                if (transform.position.x > PlayerController.instance.transform.position.x)
+                {
+                    transform.localScale = Vector3.one;
+                }
+                else
+                {
+                    transform.localScale = new Vector3(-1f, 1f, 1f);
                 }
             }
         }
