@@ -109,4 +109,10 @@ public class PlayerController : MonoBehaviour
         knockBackTimeCounter = knockBackTime;
         playerAnim.SetTrigger("isKnockBack");
     }
+
+    public void Bounce(float bounceAmount)
+    {
+        theRb.velocity = new Vector2(theRb.velocity.x, bounceAmount);
+        AudioManager.instance.PlaySFXPitch(14);
+    }
 }
